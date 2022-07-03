@@ -15,7 +15,11 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 
 streamlit.dataframe(fruits_to_show)
 
+import snowflake.connector
 import requests
+import pandas
+import streamlit
+from urllib.error import  URLError
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 streamlit.text(fruityvice_response.json)
 
@@ -28,7 +32,7 @@ streamlit.dataframe(fruityvice_normalized)
 fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
 streamlit.write('The user entered ', fruit_choice)
 
-import snowflake.connector
+
 
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
@@ -40,3 +44,4 @@ streamlit.dataframe(my_data_row)
 
 fruit_choice = streamlit.text_input('What fruit would you add?','jackfruit')
 streamlit.write('Thanks for adding ', fruit_choice)
+my_cur.execute("insert into fruit_load_list values (
